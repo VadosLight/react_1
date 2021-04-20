@@ -9,11 +9,10 @@ class App extends React.Component {
   loadData = async (e) => {
     e.preventDefault();
     const name = document.getElementById("search").value;
-    
-
+    //&beer_name=${name}
 
     const API_URL = await fetch(
-      `https://api.punkapi.com/v2/beers?page=1&per_page=80&beer_name=${name}`
+      `https://api.punkapi.com/v2/beers?page=1&per_page=80`
     );
     const data = await API_URL.json();
 
