@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Header from "./Header/Header.jsx";
+import Body from "./Body/Body.jsx";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+//https://api.punkapi.com/v2/beers/random
+
+class App extends React.Component {
+  loadData = async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("search").value;
+    
+
+
+    const API_URL = await fetch(
+      `https://api.punkapi.com/v2/beers?page=1&per_page=80&beer_name=${name}`
+    );
+    const data = await API_URL.json();
+
+    console.log(data);
+  };
+
+  render() {
+    return (
+      <div className="appication">
+        <Header beerList={this.loadData}></Header>
+        <Body></Body>
+      </div>
+    );
+  }
 }
 
 export default App;

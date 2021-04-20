@@ -1,0 +1,25 @@
+.header {
+  height: 50px;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: stretch;
+
+  list-style: none;
+  background: #fdc866;
+  padding: 0;
+}
+
+.header > ul {
+  font-size: larger;
+  display: flex;
+  align-content: center;
+}
+
+.header > li {
+  display: inline-block;
+  margin: 5px 10px;
+}
