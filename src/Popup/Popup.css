@@ -1,0 +1,47 @@
+#popup {
+  /* display: none; */
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+#popup-form {
+  display: flex;
+
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: stretch;
+
+  margin: 200px auto;
+
+  background-color: rgb(28, 28, 28);
+  border-radius: 8px;
+  border: 2px solid burlywood;
+  color: blanchedalmond;
+
+  width: 300px;
+  height: 450px;
+}
+
+#popup-form * {
+  margin: auto;
+  outline: none;
+  color: blanchedalmond;
+}
+
+#popup-form > input {
+  background-color: rgb(35, 51, 54);
+  margin-top: 0;
+  height: 20px;
+  padding-left: 10px;
+}
+
+#popup-form > button {
+  height: 25px;
+  width: 100px;
+  background-color: rgb(35, 51, 54);
+}

@@ -2,16 +2,15 @@ import React from "react";
 import "./App.css";
 import Header from "./Header/Header.jsx";
 import Body from "./Body/Body.jsx";
+import Popup from "./Popup/Popup.jsx";
 
 const perPage = 10;
 
 class App extends React.Component {
-  
   state = {
     beerList: [],
     sortBy: "name A-Z",
     page: 1,
-    
   };
 
   loadData = async () => {
@@ -50,10 +49,10 @@ class App extends React.Component {
 
   loadMoreData = async () => {
     let beerName = "";
-    
+
     const name = encodeURIComponent(document.getElementById("search").value);
     this.setState({
-      page: this.state.page+1,
+      page: this.state.page + 1,
     });
 
     if (name) {
@@ -63,7 +62,9 @@ class App extends React.Component {
     }
 
     const API_URL = await fetch(
-      `https://api.punkapi.com/v2/beers?page=${this.state.page+1}&per_page=${perPage}${beerName}`
+      `https://api.punkapi.com/v2/beers?page=${
+        this.state.page + 1
+      }&per_page=${perPage}${beerName}`
     );
     const data = await API_URL.json();
 
@@ -95,6 +96,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="appication">
+        <Popup></Popup>
         <Header loadBeerList={this.loadData} sortOpt={this.sortBy}></Header>
         <Body appState={this.state}></Body>
         <button id="btnLoadMore" onClick={this.loadMoreData}>
