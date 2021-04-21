@@ -3,21 +3,26 @@ import "./App.css";
 import Header from "./Header/Header.jsx";
 import Body from "./Body/Body.jsx";
 
-//https://api.punkapi.com/v2/beers/random
+const perPage = 10;
 
 class App extends React.Component {
+  
   state = {
-    beerList: undefined,
-    sortBy: "nameAZ",
+    beerList: [],
+    sortBy: "name A-Z",
+    page: 1,
+    
   };
-  //sortBy can contain nameAZ, nameZA, abvFromMin, abvFromBig
 
   loadData = async () => {
     // e.preventDefault();
-
     let beerName = "";
+    this.setState({
+      page: 1,
+    });
 
-    const name = document.getElementById("search").value;
+    const name = encodeURIComponent(document.getElementById("search").value);
+
     if (name) {
       beerName = `&beer_name=${name}`;
     } else {
@@ -25,7 +30,7 @@ class App extends React.Component {
     }
 
     const API_URL = await fetch(
-      `https://api.punkapi.com/v2/beers?page=1&per_page=80${beerName}`
+      `https://api.punkapi.com/v2/beers?page=1&per_page=${perPage}${beerName}`
     );
     const data = await API_URL.json();
 
@@ -40,8 +45,47 @@ class App extends React.Component {
       }),
     });
 
-    // console.log(data);
     console.log(this.state);
+  };
+
+  loadMoreData = async () => {
+    let beerName = "";
+    
+    const name = encodeURIComponent(document.getElementById("search").value);
+    this.setState({
+      page: this.state.page+1,
+    });
+
+    if (name) {
+      beerName = `&beer_name=${name}`;
+    } else {
+      beerName = "";
+    }
+
+    const API_URL = await fetch(
+      `https://api.punkapi.com/v2/beers?page=${this.state.page+1}&per_page=${perPage}${beerName}`
+    );
+    const data = await API_URL.json();
+
+    this.setState({
+      beerList: this.state.beerList.concat(
+        data.map((e) => {
+          return {
+            name: e.name,
+            abv: e.abv,
+            img: e.image_url,
+            description: e.description,
+          };
+        })
+      ),
+    });
+  };
+
+  sortBy = () => {
+    const sortOpt = document.getElementById("sortOption").value;
+    this.setState({
+      sortBy: sortOpt,
+    });
   };
 
   componentDidMount() {
@@ -51,8 +95,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="appication">
-        <Header loadBeerList={this.loadData}></Header>
+        <Header loadBeerList={this.loadData} sortOpt={this.sortBy}></Header>
         <Body appState={this.state}></Body>
+        <button id="btnLoadMore" onClick={this.loadMoreData}>
+          Load more...
+        </button>
       </div>
     );
   }
