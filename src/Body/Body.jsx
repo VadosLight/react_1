@@ -59,8 +59,8 @@ function sortObjectAZ(obj) {
 
 function sortObjectZA(obj) {
   return obj.sort((a, b) => {
-    var nameA = a.name.toUpperCase(); // ignore upper and lowercase
-    var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+    var nameA = a.name.toUpperCase();
+    var nameB = b.name.toUpperCase();
     if (nameA < nameB) {
       return 1;
     }
@@ -68,7 +68,6 @@ function sortObjectZA(obj) {
       return -1;
     }
 
-    // names must be equal
     return 0;
   });
 }
