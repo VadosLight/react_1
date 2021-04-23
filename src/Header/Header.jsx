@@ -13,16 +13,13 @@ class Header extends React.Component {
             <option>ABV max</option>
           </select>
         </li>
+
         <li>
           <h2>Beer collection</h2>
         </li>
+
         <li>
-          <input
-            type="text"
-            id="search"
-            onChange={this.props.loadBeerList}
-            onLoad={this.props.loadBeerList}
-          />
+          <input type="text" id="search" onChange={this.props.loadBeerList} />
         </li>
       </ul>
     );

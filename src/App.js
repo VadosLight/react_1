@@ -14,7 +14,6 @@ class App extends React.Component {
   };
 
   loadData = async () => {
-    // e.preventDefault();
     let beerName = "";
     this.setState({
       page: 1,
@@ -28,23 +27,28 @@ class App extends React.Component {
       beerName = "";
     }
 
-    const API_URL = await fetch(
+    fetch(
       `https://api.punkapi.com/v2/beers?page=1&per_page=${perPage}${beerName}`
-    );
-    const data = await API_URL.json();
-
-    this.setState({
-      beerList: data.map((e) => {
-        return {
-          name: e.name,
-          abv: e.abv,
-          img: e.image_url,
-          description: e.description,
-        };
-      }),
-    });
-
-    console.log(this.state);
+    )
+      .then((response) => response.json())
+      .catch((rej) => {
+        console.log(rej);
+      })
+      .then((data) => {
+        this.setState({
+          beerList: data.map((e) => {
+            return {
+              name: e.name,
+              abv: e.abv,
+              img: e.image_url,
+              description: e.description,
+            };
+          }),
+        });
+      })
+      .catch((rej) => {
+        console.log(rej);
+      });
   };
 
   loadMoreData = async () => {
@@ -61,25 +65,32 @@ class App extends React.Component {
       beerName = "";
     }
 
-    const API_URL = await fetch(
+    fetch(
       `https://api.punkapi.com/v2/beers?page=${
         this.state.page + 1
       }&per_page=${perPage}${beerName}`
-    );
-    const data = await API_URL.json();
-
-    this.setState({
-      beerList: this.state.beerList.concat(
-        data.map((e) => {
-          return {
-            name: e.name,
-            abv: e.abv,
-            img: e.image_url,
-            description: e.description,
-          };
-        })
-      ),
-    });
+    )
+      .then((response) => response.json())
+      .catch((rej) => {
+        console.log(rej);
+      })
+      .then((data) => {
+        this.setState({
+          beerList: this.state.beerList.concat(
+            data.map((e) => {
+              return {
+                name: e.name,
+                abv: e.abv,
+                img: e.image_url,
+                description: e.description,
+              };
+            })
+          ),
+        });
+      })
+      .catch((rej) => {
+        console.log(rej);
+      });
   };
 
   sortBy = () => {
